@@ -1,5 +1,10 @@
 Manifest-Version: 1.0
+Implementation-Title: user-management-common
+Implementation-Version: 0.0.1-SNAPSHOT
 Built-By: Mahamat
+Implementation-Vendor-Id: com.baeldung
 Build-Jdk: 1.8.0_144
+Implementation-URL: https://projects.spring.io/spring-boot/#/spring-bo
+ ot-starter-parent/user-management-common
 Created-By: Maven Integration for Eclipse
 
