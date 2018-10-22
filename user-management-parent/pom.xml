@@ -62,5 +62,5 @@
 	<modules>
 		<module>../user-management-common</module>
 		<module>../user-management-web</module>
-	</modules>
+	</modules> 
 </project>
