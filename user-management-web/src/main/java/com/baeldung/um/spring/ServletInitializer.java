@@ -1,4 +1,4 @@
-package com.baeldung.um;
+package com.baeldung.um.spring;
 
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
