@@ -9,6 +9,12 @@
 
 	<name>user-management-web</name>
 	<description>Demo project for Spring Boot</description>
+	
+	<parent>
+		<groupId>com.baeldung</groupId>
+		<artifactId>user-management-parent</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+	</parent>
 
 
 	<properties>
@@ -89,9 +95,5 @@
 	</build>
 
 
-	<parent>
-		<groupId>com.baeldung</groupId>
-		<artifactId>user-management-parent</artifactId>
-		<version>0.0.1-SNAPSHOT</version>
-	</parent>
+	
 </project>
