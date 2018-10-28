@@ -1,7 +1,6 @@
 package com.baeldung.common.persistence.service;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,7 +15,6 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.baeldung.common.interfaces.IWithName;
-import com.baeldung.common.persistence.ServicePreconditions;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Lists;
 
@@ -32,14 +30,21 @@ public abstract class AbstractRawService<T extends IWithName> implements IRawSer
         super();
     }
 
+    
+    @Override
+	public T findOne(long id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+    
     // API
 
     // find - one
-    @Transactional(readOnly = true)
-    public T findOne(long id) {
-    	Optional<T> entity = getDao().findById(id);
-    	return entity.orElse(null);
-    }
+//    @Transactional(readOnly = true)
+//    public T findOne(long id) {
+////    	Optional<T> entity = getDao().findById(id);
+//    	return entity.orElse(null);
+//    }
 
     // find - all
 
@@ -114,14 +119,18 @@ public abstract class AbstractRawService<T extends IWithName> implements IRawSer
         getDao().deleteAll();
     }
 
-   
-    public void delete(final long id) {
-        final Optional<T> entity = getDao().findById(id);
-        if(entity.isPresent()) {
-	        ServicePreconditions.checkEntityExists(entity);
-	        getDao().delete(entity.get());
-        }
-    }
+    @Override
+	public void delete(long id) {
+		// TODO Auto-generated method stub
+		
+	}
+//    public void delete(final long id) {
+//        final Optional<T> entity = getDao().findById(id);
+//        if(entity.isPresent()) {
+//	        ServicePreconditions.checkEntityExists(entity);
+//	        getDao().delete(entity.get());
+//        }
+//    }
 
     // count
 
