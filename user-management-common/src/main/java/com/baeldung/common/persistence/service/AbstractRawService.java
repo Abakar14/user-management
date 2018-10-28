@@ -15,12 +15,12 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.baeldung.common.interfaces.IWithName;
+import com.baeldung.common.persistence.ServicePreconditions;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Lists;
 
 @Transactional
 public abstract class AbstractRawService<T extends IWithName> implements IRawService<T> {
-	
     protected final Logger logger = LoggerFactory.getLogger(getClass());
 
     @Autowired
@@ -30,38 +30,32 @@ public abstract class AbstractRawService<T extends IWithName> implements IRawSer
         super();
     }
 
-    
-    @Override
-	public T findOne(long id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-    
     // API
 
     // find - one
-//    @Transactional(readOnly = true)
-//    public T findOne(long id) {
-////    	Optional<T> entity = getDao().findById(id);
-//    	return entity.orElse(null);
-//    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public T findOne(final long id) {
+        return getDao().findOne(id);
+    }
 
     // find - all
 
-
+    @Override
     @Transactional(readOnly = true)
     public List<T> findAll() {
         return Lists.newArrayList(getDao().findAll());
     }
 
-
+    @Override
     @Transactional(readOnly = true)
     public Page<T> findAllPaginatedAndSortedRaw(final int page, final int size, final String sortBy, final String sortOrder) {
         final Sort sortInfo = constructSort(sortBy, sortOrder);
         return getDao().findAll(new PageRequest(page, size, sortInfo));
     }
 
-   
+    @Override
     @Transactional(readOnly = true)
     public List<T> findAllPaginatedAndSorted(final int page, final int size, final String sortBy, final String sortOrder) {
         final Sort sortInfo = constructSort(sortBy, sortOrder);
@@ -71,14 +65,14 @@ public abstract class AbstractRawService<T extends IWithName> implements IRawSer
         }
         return content;
     }
-    
-   
+
+    @Override
     @Transactional(readOnly = true)
-    public Page<T> findAllPaginatedRaw(final int page, final int size) {       
+    public Page<T> findAllPaginatedRaw(final int page, final int size) {
         return getDao().findAll(new PageRequest(page, size));
     }
 
-  
+    @Override
     @Transactional(readOnly = true)
     public List<T> findAllPaginated(final int page, final int size) {
         final List<T> content = getDao().findAll(new PageRequest(page, size, null)).getContent();
@@ -88,7 +82,7 @@ public abstract class AbstractRawService<T extends IWithName> implements IRawSer
         return content;
     }
 
-   
+    @Override
     @Transactional(readOnly = true)
     public List<T> findAllSorted(final String sortBy, final String sortOrder) {
         final Sort sortInfo = constructSort(sortBy, sortOrder);
@@ -96,7 +90,8 @@ public abstract class AbstractRawService<T extends IWithName> implements IRawSer
     }
 
     // save/create/persist
-    
+
+    @Override
     public T create(final T entity) {
         Preconditions.checkNotNull(entity);
 
@@ -107,6 +102,7 @@ public abstract class AbstractRawService<T extends IWithName> implements IRawSer
 
     // update/merge
 
+    @Override
     public void update(final T entity) {
         Preconditions.checkNotNull(entity);
 
@@ -115,26 +111,22 @@ public abstract class AbstractRawService<T extends IWithName> implements IRawSer
 
     // delete
 
+    @Override
     public void deleteAll() {
         getDao().deleteAll();
     }
 
     @Override
-	public void delete(long id) {
-		// TODO Auto-generated method stub
-		
-	}
-//    public void delete(final long id) {
-//        final Optional<T> entity = getDao().findById(id);
-//        if(entity.isPresent()) {
-//	        ServicePreconditions.checkEntityExists(entity);
-//	        getDao().delete(entity.get());
-//        }
-//    }
+    public void delete(final long id) {
+        final T entity = getDao().findOne(id);
+        ServicePreconditions.checkEntityExists(entity);
+
+        getDao().delete(entity);
+    }
 
     // count
 
-   
+    @Override
     public long count() {
         return getDao().count();
     }
