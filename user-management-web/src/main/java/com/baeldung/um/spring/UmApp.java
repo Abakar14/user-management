@@ -9,8 +9,7 @@ import org.springframework.context.annotation.Import;
     UmContextConfig.class,
     UmPersistenceJpaConfig.class,
     UmServiceConfig.class,
-    UmWebConfig.class
-    
+    UmWebConfig.class    
     
 })//formatter:on
 public class UmApp {
